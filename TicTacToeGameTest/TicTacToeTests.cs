@@ -1,5 +1,6 @@
 using System.Numerics;
 using TicTacToeGame.Player;
+using TicTacToeGame.Referee;
 
 namespace TicTacToeGameTest
 {
@@ -46,7 +47,8 @@ namespace TicTacToeGameTest
         public void WhenInitializeTheGameTheStateShouldBeInProgres()
         {
             var newGame = new TicTacToe();
-            Assert.That(newGame.GetGameState(), Is.EqualTo("In Progress"));
+            Assert.That(newGame.GetGameState(), Is.EqualTo(GameStateEnum.InProgress));
+            Assert.That(newGame.GetGameMessage(), Is.EqualTo("In Progress"));
         }
 
         [Test]
@@ -73,7 +75,8 @@ namespace TicTacToeGameTest
             Assert.IsTrue(verification);
             Assert.That(newGame.GetCurrentPlayer(), Is.EqualTo(PlayerToken.X));
             Assert.That(newGame.GetMoveCount(), Is.EqualTo(0));
-            Assert.That(newGame.GetGameState(), Is.EqualTo("In Progress"));
+            Assert.That(newGame.GetGameState(), Is.EqualTo(GameStateEnum.InProgress));
+            Assert.That(newGame.GetGameMessage(), Is.EqualTo("In Progress"));
             Assert.That(newGame.GetErrors(), Is.EqualTo(string.Empty));
         }
 
@@ -86,6 +89,7 @@ namespace TicTacToeGameTest
 
             Assert.That(firstPlayer, Is.EqualTo(PlayerToken.X));
             Assert.That(newGame.GetCurrentPlayer, Is.EqualTo(PlayerToken.O));
+            Assert.That(newGame.GetMoveCount(), Is.EqualTo(1));
         }
 
         [Test]
@@ -96,6 +100,7 @@ namespace TicTacToeGameTest
             newGame.MakeMove(0,0);
 
             Assert.That(currentPlayer, Is.EqualTo(newGame.GetBoard()[0,0]));
+            Assert.That(newGame.GetMoveCount(), Is.EqualTo(1));
         }
 
         [Test]
@@ -108,7 +113,9 @@ namespace TicTacToeGameTest
             newGame.MakeMove(2, 0);
             newGame.MakeMove(2, 2);
 
-            Assert.That(newGame.GetGameState(), Is.EqualTo("Game finished, player X wins"));
+            Assert.That(newGame.GetGameMessage(), Is.EqualTo("Game finished, player X wins"));
+            Assert.That(newGame.GetGameState(), Is.EqualTo(GameStateEnum.Win));
+            Assert.That(newGame.GetMoveCount(), Is.EqualTo(5));
         }
 
         [Test]
@@ -123,6 +130,26 @@ namespace TicTacToeGameTest
             newGame.MakeMove(0, 2);
 
             Assert.That(newGame.GetBoard()[0,2], Is.EqualTo(PlayerToken.Empty));
+            Assert.That(newGame.GetMoveCount(), Is.EqualTo(5));
+        }
+
+        [Test]
+        public void WhenThereIsNoMoreBlankSpacesTheRefereeShouldDeclareATie()
+        {
+            var newGame = new TicTacToe();
+            newGame.MakeMove(0, 0);
+            newGame.MakeMove(1, 1);
+            newGame.MakeMove(0, 2);
+            newGame.MakeMove(0, 1);
+            newGame.MakeMove(2, 1);
+            newGame.MakeMove(1, 2);
+            newGame.MakeMove(1, 0);
+            newGame.MakeMove(2, 0);
+            newGame.MakeMove(2, 2);
+
+            Assert.That(newGame.GetGameMessage(), Is.EqualTo("Game finished, Tie"));
+            Assert.That(newGame.GetGameState(), Is.EqualTo(GameStateEnum.Tie));
+            Assert.That(newGame.GetMoveCount(), Is.EqualTo(9));
         }
 
     }
