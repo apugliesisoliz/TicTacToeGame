@@ -11,7 +11,7 @@ namespace TicTacToeGame.Board
 {
     public class GameBoard : IGameBoard
     {
-        private char[,] board;
+        private PlayerToken[,] board;
         private string errors;
         public GameBoard() 
         {
@@ -19,17 +19,17 @@ namespace TicTacToeGame.Board
         }
         public void InitializeGameBoard()
         {
-            board = new char[3, 3];
+            board = new PlayerToken[3, 3];
             for (int i = 0; i < 3; i++)
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    board[i, j] = ' ';
+                    board[i, j] = PlayerToken.Empty;
                 }
             }
             errors = string.Empty;
         }
-        public char[,] GetGameBoard() { return board; }
+        public PlayerToken[,] GetGameBoard() { return board; }
         public string GetErrors() { return errors; }
 
         public void MakeMove(int row, int col, IGamePlayer player, IGameReferee referee)
@@ -64,7 +64,7 @@ namespace TicTacToeGame.Board
             var checkOutOfBoundaries = row < 0 || row > 2 || col < 0 || col > 2;
             errors += checkOutOfBoundaries ? "Invalid move! row and column must be between 1 and 3. /n" : "";
 
-            var checkSpaceOcupied = board[row, col] != ' ';
+            var checkSpaceOcupied = board[row, col] != PlayerToken.Empty;
             errors += checkSpaceOcupied ? "Invalid move! That space is already taken." : "";
 
             return checkOutOfBoundaries || checkSpaceOcupied;

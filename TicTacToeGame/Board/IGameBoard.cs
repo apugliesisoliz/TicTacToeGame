@@ -11,7 +11,7 @@ namespace TicTacToeGame.Board
     public interface IGameBoard
     {
         void InitializeGameBoard();
-        char[,] GetGameBoard();
+        PlayerToken[,] GetGameBoard();
         string GetErrors();
         void MakeMove(int row, int col, IGamePlayer player, IGameReferee referee);
     }

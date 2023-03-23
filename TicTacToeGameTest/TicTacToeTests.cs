@@ -1,4 +1,5 @@
 using System.Numerics;
+using TicTacToeGame.Player;
 
 namespace TicTacToeGameTest
 {
@@ -21,7 +22,7 @@ namespace TicTacToeGameTest
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    verification =  board[i, j] == ' ';
+                    verification =  board[i, j] == PlayerToken.Empty;
                 }
             }
             Assert.IsTrue(verification);
@@ -31,7 +32,7 @@ namespace TicTacToeGameTest
         public void WhenInitializeTheGameTheCurrentPlayerShouldBeX()
         {
             var newGame = new TicTacToe();
-            Assert.That(newGame.GetCurrentPlayer(), Is.EqualTo('X'));
+            Assert.That(newGame.GetCurrentPlayer(), Is.EqualTo(PlayerToken.X));
         }
 
         [Test]
@@ -66,11 +67,11 @@ namespace TicTacToeGameTest
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    verification = board[i, j] == ' ';
+                    verification = board[i, j] == PlayerToken.Empty;
                 }
             }
             Assert.IsTrue(verification);
-            Assert.That(newGame.GetCurrentPlayer(), Is.EqualTo('X'));
+            Assert.That(newGame.GetCurrentPlayer(), Is.EqualTo(PlayerToken.X));
             Assert.That(newGame.GetMoveCount(), Is.EqualTo(0));
             Assert.That(newGame.GetGameState(), Is.EqualTo("In Progress"));
             Assert.That(newGame.GetErrors(), Is.EqualTo(string.Empty));
@@ -83,8 +84,8 @@ namespace TicTacToeGameTest
             var firstPlayer = newGame.GetCurrentPlayer();
             newGame.MakeMove(0, 0);
 
-            Assert.That(firstPlayer, Is.EqualTo('X'));
-            Assert.That(newGame.GetCurrentPlayer, Is.EqualTo('O'));
+            Assert.That(firstPlayer, Is.EqualTo(PlayerToken.X));
+            Assert.That(newGame.GetCurrentPlayer, Is.EqualTo(PlayerToken.O));
         }
 
         [Test]
@@ -121,7 +122,7 @@ namespace TicTacToeGameTest
             newGame.MakeMove(2, 2);
             newGame.MakeMove(0, 2);
 
-            Assert.That(newGame.GetBoard()[0,2], Is.EqualTo(' '));
+            Assert.That(newGame.GetBoard()[0,2], Is.EqualTo(PlayerToken.Empty));
         }
 
     }

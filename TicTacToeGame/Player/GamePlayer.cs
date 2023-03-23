@@ -8,15 +8,15 @@ namespace TicTacToeGame.Player
 {
     public class GamePlayer : IGamePlayer
     {
-        private char currentPlayer;
+        private PlayerToken currentPlayer;
         public GamePlayer()
         {
-            currentPlayer = 'X';
+            currentPlayer = PlayerToken.X;
         }
         public void SwitchPlayer()
         {
-            currentPlayer = currentPlayer == 'X' ? 'O' : 'X';
+            currentPlayer = currentPlayer == PlayerToken.X ? PlayerToken.O : PlayerToken.X;
         }
-        public char GetCurrentPlayer() { return currentPlayer; }
+        public PlayerToken GetCurrentPlayer() { return currentPlayer; }
     }
 }

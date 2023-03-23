@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace TicTacToeGame.Player
 {
-    public interface IGamePlayer
+    public enum PlayerToken
     {
-        void SwitchPlayer();
-        PlayerToken GetCurrentPlayer();
+        X,
+        O,
+        Empty
     }
 }
